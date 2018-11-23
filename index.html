@@ -8,9 +8,54 @@
     <link rel='stylesheet' href='assets/css/reset.css'>
     <link rel='stylesheet' href='assets/css/style.css'>
     <script src='assets/javascript/jQuery.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
 </head>
 <body>
-    
+    <main>
+        <div id="player-1" data-playerPresent='no'>
+            <h1>
+                Player 1
+            </h1>
+            <div class='innerContent'>
+                <form>
+                    <h2>
+                        Player 1: Enter Your Name
+                    </h2>
+                    <input id='inputPlayer-1' val=''>
+                    <br>
+                    <span id="submitPlayer-1">
+                        Submit
+                    </span>
+                </form>
+            </div>
+        </div>
+        <div id="arena">
+            <h1>
+                Outcome
+            </h1>
+            <div class="innerContent"></div>
+        </div>
+        <div id="player-2" data-playerPresent='no'>
+            <h1>
+                Player 2
+            </h1>
+            <div class='innerContent'>
+                <form>
+                    <h2>
+                        Player 2: Enter Your Name
+                    </h2>
+                    <input id='inputPlayer-2' val=''>
+                    <br>
+                    <span id="submitPlayer-2">
+                        Submit
+                    </span>
+                </form>
+            </div>
+        </div>
+    </main>
+    <aside id="chatBox">
+
+    </aside>
     <script src='assets/javascript/main.js'></script>
 </body>
 </html>
