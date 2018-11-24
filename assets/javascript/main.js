@@ -58,7 +58,7 @@ players.on('value', function(snapshot) {
         $('#player-2 h1').html(player_2_name);
     }
     if (snapshot.child('player2').exists() && snapshot.child('player1').exists() && $('#player-1').attr('data-playerPresent') === 'yes') {
-        $('#player-1 .innerContent').append($('<span onclick="chooseRock()">Rock</span><span onclick="choosePaper()">Paper</span><span onclick="chooseScissors()">Scissors</span>'));
+        $('#player-1 .innerContent').append($('<span id="chooseRockButton">Rock</span><span id="choosePaperButton">Paper</span><span id="chooseScissorsButton">Scissors</span>'));
         $('#player-1').attr('id', 'firstChoice');
         $('#player-2').attr('id', 'secondChoice');
     }
@@ -93,7 +93,7 @@ const chooseScissors = () => {
 choice.child('firstChoice').on('value', function(snapshot) {
     first_choice = snapshot.val();
     if ($('#secondChoice').attr('data-playerPresent') === 'yes') {
-        $('#secondChoice .innerContent').append($('<span onclick="getRock()">Rock</span><span onclick="getPaper()">Paper</span><span onclick="getScissors()">Scissors</span>'));
+        $('#secondChoice .innerContent').append($('<span id="getRockButton">Rock</span><span id="getPaperButton">Paper</span><span id="getScissorsButton">Scissors</span>'));
     }
 })
 
@@ -174,13 +174,13 @@ scoreboard.on('value', function(snapshot) {
         $('#secondChoice .innerContent').append($(`<span>Wins: ${snapshot.val().second_choice_wins}</span>`));
         $('#secondChoice .innerContent').append($(`<span>Losses: ${snapshot.val().second_choice_losses}</span>`));
         $('#secondChoice .innerContent').append($(`<span>Ties: ${snapshot.val().ties}</span>`));
-        $('#arena .innerContent').append($('<span id="startNewGame" onclick="newGame()">Play again?</span>'));
+        $('#arena .innerContent').append($('<span id="startNewGame">Play again?</span>'));
 
     } else if ($('#firstChoice').attr('data-playerPresent') === 'yes') {
         $('#firstChoice .innerContent').append($(`<span>Wins: ${snapshot.val().second_choice_losses}</span>`));
         $('#firstChoice .innerContent').append($(`<span>Losses: ${snapshot.val().second_choice_wins}</span>`));
         $('#firstChoice .innerContent').append($(`<span>Ties: ${snapshot.val().ties}</span>`));
-        $('#arena .innerContent').append($('<span id="startNewGame" onclick="newGame()">Play again?</span>'));
+        $('#arena .innerContent').append($('<span id="startNewGame">Play again?</span>'));
     }
 })
 
@@ -191,11 +191,11 @@ const newGame = () => {
         secondChoice: ''
     })
     if ($('#firstChoice').attr('data-playerPresent') === 'yes') {
-        $('#firstChoice .innerContent').html($('<span onclick="chooseRock()">Rock</span><span onclick="choosePaper()">Paper</span><span onclick="chooseScissors()">Scissors</span>'));
+        $('#player-1 .innerContent').append($('<span id="chooseRockButton">Rock</span><span id="choosePaperButton">Paper</span><span id="chooseScissorsButton">Scissors</span>'));
     }
 }
 
-$('#submitChat').on('click', function () {
+$(document).on('click', '#submitChat', function () {
     let messageContent
     if ($('#player-1').attr('data-playerPresent') === 'yes' || $('#firstChoice').attr('data-playerPresent') === 'yes') {
         messageContent = `${player_1_name}: ${$('#message').val()}`;
@@ -208,3 +208,34 @@ $('#submitChat').on('click', function () {
 chat.on('child_added', function (snapshot) {
     $('#chatBox').append(`<div class='messageHistory'>${snapshot.val()}</div>`);
 });
+
+$(document).on('click', '#startNewGame', function() {
+    newGame();
+})
+
+$(document).on('click', '#getRockButton', function() {
+    getRock();
+})
+
+$(document).on('click', '#getPaperButton', function() {
+    getPaper();
+})
+
+$(document).on('click', '#getScissorsButton', function() {
+    getScissors();
+})
+
+$(document).on('click', '#chooseRockButton', function() {
+    chooseRock();
+})
+
+$(document).on('click', '#choosePaperButton', function() {
+    choosePaper();
+})
+
+$(document).on('click', '#chooseScissorsButton', function() {
+    chooseScissors();
+})
+
+// starts at the bottom and scrolls until the height of the box is reached which is the case at default
+$("#chatBox").animate({scrollTop: $(this).height() }, "slow"); // https://stackoverflow.com/questions/15629599/how-to-fix-the-scrollbar-always-at-the-bottom-of-a-div/15629743
