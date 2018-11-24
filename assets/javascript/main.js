@@ -25,6 +25,10 @@ let secondChoiceLosses = 0;
 let player_1_name = '';
 let player_2_name = '';
 
+choice.set({
+    firstChoice: '',
+    secondChoice: ''
+})
 
 $('#submitPlayer-1').on('click', function() {
     event.preventDefault();
@@ -58,7 +62,7 @@ players.on('value', function(snapshot) {
         $('#player-2 h1').html(player_2_name);
     }
     if (snapshot.child('player2').exists() && snapshot.child('player1').exists() && $('#player-1').attr('data-playerPresent') === 'yes') {
-        $('#player-1 .innerContent').append($('<span id="chooseRockButton">Rock</span><span id="choosePaperButton">Paper</span><span id="chooseScissorsButton">Scissors</span>'));
+        $('#player-1 .innerContent').append($('<span class="button" id="chooseRockButton">Rock</span><span class="button" id="choosePaperButton">Paper</span><span class="button" id="chooseScissorsButton">Scissors</span>'));
         $('#player-1').attr('id', 'firstChoice');
         $('#player-2').attr('id', 'secondChoice');
     }
@@ -87,13 +91,13 @@ const chooseScissors = () => {
     choice.set({
         firstChoice: 'scissors'
     })
-    $('#player-1 .innerContent').empty();
+    $('#firstChoice .innerContent').empty();
 }
 
 choice.child('firstChoice').on('value', function(snapshot) {
     first_choice = snapshot.val();
-    if ($('#secondChoice').attr('data-playerPresent') === 'yes') {
-        $('#secondChoice .innerContent').append($('<span id="getRockButton">Rock</span><span id="getPaperButton">Paper</span><span id="getScissorsButton">Scissors</span>'));
+    if ($('#secondChoice').attr('data-playerPresent') === 'yes' && first_choice !== '') {
+        $('#secondChoice .innerContent').append($('<span class="button" id="getRockButton">Rock</span><span class="button" id="getPaperButton">Paper</span><span class="button" id="getScissorsButton">Scissors</span>'));
     }
 })
 
@@ -174,13 +178,13 @@ scoreboard.on('value', function(snapshot) {
         $('#secondChoice .innerContent').append($(`<span>Wins: ${snapshot.val().second_choice_wins}</span>`));
         $('#secondChoice .innerContent').append($(`<span>Losses: ${snapshot.val().second_choice_losses}</span>`));
         $('#secondChoice .innerContent').append($(`<span>Ties: ${snapshot.val().ties}</span>`));
-        $('#arena .innerContent').append($('<span id="startNewGame">Play again?</span>'));
+        $('#arena .innerContent').append($('<span class="button" id="startNewGame">Play again?</span>'));
 
     } else if ($('#firstChoice').attr('data-playerPresent') === 'yes') {
         $('#firstChoice .innerContent').append($(`<span>Wins: ${snapshot.val().second_choice_losses}</span>`));
         $('#firstChoice .innerContent').append($(`<span>Losses: ${snapshot.val().second_choice_wins}</span>`));
         $('#firstChoice .innerContent').append($(`<span>Ties: ${snapshot.val().ties}</span>`));
-        $('#arena .innerContent').append($('<span id="startNewGame">Play again?</span>'));
+        $('#arena .innerContent').append($('<span class="button" id="startNewGame">Play again?</span>'));
     }
 })
 
@@ -191,7 +195,7 @@ const newGame = () => {
         secondChoice: ''
     })
     if ($('#firstChoice').attr('data-playerPresent') === 'yes') {
-        $('#player-1 .innerContent').append($('<span id="chooseRockButton">Rock</span><span id="choosePaperButton">Paper</span><span id="chooseScissorsButton">Scissors</span>'));
+        $('#firstChoice .innerContent').append($('<span class="button" id="chooseRockButton">Rock</span><span class="button" id="choosePaperButton">Paper</span><span class="button" id="chooseScissorsButton">Scissors</span>'));
     }
 }
 

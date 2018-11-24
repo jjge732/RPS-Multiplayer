@@ -71,9 +71,12 @@ aside {
     grid-column: 3 / 4;
     grid-row: 2;
     height: 20px;
-    padding: 12px 0;
-    margin: 0 10px 0 0;
+    padding: 10px 2px;
+    margin: 0 10px 5px 0;
     text-align: center;
+    border: solid #fff 2px;
+    box-shadow: 1px 1px 4px;
+    color: #000;
 }
 
 .messages {
@@ -90,7 +93,7 @@ input {
     margin: 5px;
 }
 
-#submitPlayer-1, #submitPlayer-2 {
+.button {
     position: relative;
     width: auto;
     padding: 15px;
@@ -100,9 +103,15 @@ input {
     color: #777;
 }
 
-#submitPlayer-1:hover, #submitPlayer-2:hover {
+.button:hover {
     background-color: #CF638C;
     color: #fff;
+}
+
+#submitChat:hover {
+    background-color: #D7A7B9;
+    color: #fff;
+
 }
 
 @media screen and (max-width: 1000px) {
@@ -116,5 +125,9 @@ input {
     main, aside {
         grid-template-columns: 1fr;
         height: auto;
+    }
+    .innerContent {
+        height: 150px;
+        min-width: 250px;
     }
 }
