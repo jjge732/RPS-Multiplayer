@@ -3,7 +3,7 @@ body {
     grid-auto-rows: auto;
     background-image: url(../images/morocco-blue.png);
 }
-main {
+main, aside {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: auto;
@@ -17,7 +17,7 @@ main {
     box-shadow: 2px 4px 6px;
 }
 
-div {
+div:not(.messageHistory) {
     display: grid;
     justify-content: center;
     background-color: rgba(360, 360, 360, .75);
@@ -25,6 +25,13 @@ div {
     margin: 25px;
     grid-template-rows: 45px auto;
     padding: 20px 0;
+    text-align: center;
+}
+
+span {
+    background-color: rgba(360, 360, 360, .75);
+    border-radius: 25px;
+    margin: 25px;
     text-align: center;
 }
 
@@ -37,6 +44,36 @@ h1 {
     background-color: rgba(0, 0, 0, 0); /*Stops opacity from halving itself for the inner content*/
 }
 
-span:hover {
+span {
     cursor: pointer;
+}
+
+aside {
+    height: 200px;
+}
+
+#chatBox {
+    grid-column: 1 / 4;
+    grid-row: 1;
+}
+
+#message {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+#submitChat {
+    grid-column: 3 / 4;
+    grid-row: 2;
+    height: 20px;
+    padding: 12px 0;
+    margin: 0 10px 0 0;
+    text-align: center;
+}
+
+.messages {
+    width: 100%;
 }
