@@ -1,26 +1,26 @@
 body {
     grid-template-columns: 100%;
     grid-auto-rows: auto;
-    background-image: url(../images/morocco-blue.png);
+    background-image: url(../images/wov.png);
 }
 main, aside {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: auto;
     grid-column-gap: 25px;
-    background-color: #CF638C;
+    background-color: #5E1742;
     margin: 5% 15%;
     width: auto;
     height: 400px;
-    border: 4px solid rgba(360, 360, 360, .75);
+    border: 4px solid rgba(360, 360, 360, .95);
     border-radius: 25px;
-    box-shadow: 2px 4px 6px;
+    box-shadow: 2px 4px 6px, -2px 4px 6px;
 }
 
 div:not(.messageHistory) {
     display: grid;
     justify-content: center;
-    background-color: rgba(360, 360, 360, .75);
+    background-color: #ccc;
     border-radius: 25px;
     margin: 25px;
     grid-template-rows: 45px auto;
@@ -37,7 +37,7 @@ span {
 
 h1 {
     font-size: 36px;
-    border-bottom: 2px solid #CF638C;
+    border-bottom: 2px solid #5E1742;
 }
 
 .innerContent {
@@ -98,20 +98,20 @@ input {
     width: auto;
     padding: 15px;
     bottom: -45px;
-    border: solid #CF638C 2px;
+    border: solid #5E1742 2px;
     box-shadow: 1px 1px 4px;
     color: #777;
 }
 
 .button:hover {
-    background-color: #CF638C;
+    background-color: #962E40;
     color: #fff;
+    border-color: #fff;
 }
 
 #submitChat:hover {
-    background-color: #D7A7B9;
+    background-color: #962E40;
     color: #fff;
-
 }
 
 @media screen and (max-width: 1000px) {
