@@ -30,48 +30,67 @@ choice.set({
     secondChoice: ''
 })
 
-$('#submitPlayer-1').on('click', function() {
+$('#submitfirstChoice').on('click', function() {
     event.preventDefault();
-    player_1_name = $('#inputPlayer-1').val();
+    player_1_name = $('#inputfirstChoice').val();
     $('.innerContent').empty();
-    $('#player-1 h1').html(player_1_name);
-    $('#player-1').attr('data-playerPresent', 'yes');   
+    $('#firstChoice h1').html(player_1_name);
+    $('#firstChoice').attr('data-playerPresent', 'yes');   
     player1.set(player_1_name);
-    player1.onDisconnect().remove();
+    player1.onDisconnect(player_1_name = '').remove(resetGame());
 })
 
-$('#submitPlayer-2').on('click', function() {
+$('#submitsecondChoice').on('click', function() {
     event.preventDefault();
-    player_2_name = $('#inputPlayer-2').val();
+    player_2_name = $('#inputsecondChoice').val();
     $('.innerContent').empty();
-    $('#player-2 h1').html(player_2_name);
-    $('#player-2').attr('data-playerPresent', 'yes');
+    $('#secondChoice h1').html(player_2_name);
+    $('#secondChoice').attr('data-playerPresent', 'yes');
     player2.set(player_2_name);
-    player2.onDisconnect().remove();
+    player2.onDisconnect(player_2_name = '').remove(resetGame());
+    //.cancel
 })
 
-players.on('value', function(snapshot) {
+players.on('value', snapshot => {
     if (snapshot.child('player1').exists()) {
         player_1_name = snapshot.child('player1').val();
-        $('#player-1 .innerContent').empty();
-        $('#player-1 h1').html(player_1_name);
+        $('#firstChoice .innerContent').empty();
+        $('#firstChoice h1').html(player_1_name);
+        player1.onDisconnect(resetGame());
+    } else {
+        $('#firstChoice h1').html('Player 1');
     }
     if (snapshot.child('player2').exists()) {
         player_2_name = snapshot.child('player2').val();
-        $('#player-2 .innerContent').empty();
-        $('#player-2 h1').html(player_2_name);
+        $('#secondChoice .innerContent').empty();
+        $('#secondChoice h1').html(player_2_name);
+        player2.onDisconnect().remove(resetGame());
+    } else {
+        $('#secondChoice h1').html('Player 2');
     }
-    if (snapshot.child('player2').exists() && snapshot.child('player1').exists() && $('#player-1').attr('data-playerPresent') === 'yes') {
-        $('#player-1 .innerContent').append($('<span class="button" id="chooseRockButton">Rock</span><span class="button" id="choosePaperButton">Paper</span><span class="button" id="chooseScissorsButton">Scissors</span>'));
-        $('#player-1').attr('id', 'firstChoice');
-        $('#player-2').attr('id', 'secondChoice');
+    if (snapshot.child('player2').exists() && snapshot.child('player1').exists() && $('#firstChoice').attr('data-playerPresent') === 'yes') {
+        $('#firstChoice .innerContent').append($('<span class="button" id="chooseRockButton">Rock</span><span class="button" id="choosePaperButton">Paper</span><span class="button" id="chooseScissorsButton">Scissors</span>'));
+        $('#firstChoice').attr('id', 'firstChoice');
+        $('#secondChoice').attr('id', 'secondChoice');
     }
-    if (snapshot.child('player2').exists() && snapshot.child('player1').exists() && $('#player-2').attr('data-playerPresent') === 'yes') {
-        $('#player-2 .innerContent').append($('<span>Please wait</span>'));
-        $('#player-1').attr('id', 'firstChoice');
-        $('#player-2').attr('id', 'secondChoice');
+    if (snapshot.child('player2').exists() && snapshot.child('player1').exists() && $('#secondChoice').attr('data-playerPresent') === 'yes') {
+        $('#secondChoice .innerContent').append($('<span>Please wait</span>'));
+        $('#firstChoice').attr('id', 'firstChoice');
+        $('#secondChoice').attr('id', 'secondChoice');
     }
-})
+});
+
+// players.on('child_removed', snapshot => {
+//     console.log(snapshot.val());
+//     if (!snapshot.child('player1').exists()) {
+//         $('#firstChoice h1').html('Player 1');
+//     }
+//     if (!snapshot.child('player2').exists()) {
+//         $('#secondChoice h1').html('Player 2');
+//     };
+//     console.log(player_1_name);
+//     console.log(player_2_name);
+// })
 
 const chooseRock = () => {
     choice.set({
@@ -199,11 +218,30 @@ const newGame = () => {
     }
 }
 
+const resetGame = () => {
+    // $('#firstChoice .innerContent').empty();
+    // $('#secondChoice .innerContent').empty();
+
+    $('#firstChoice').attr('id', 'firstChoice');
+    $('#secondChoice').attr('id', 'secondChoice');
+
+    
+
+    if ($('#firstChoice').attr('data-present') === 'no') {
+        $('#firstChoice').append('<h1>Player 1</h1><div class="innerContent"><form><h2>Player 1: Enter Your Name</h2><input id="inputfirstChoice" val=""><br><span class="button" id="submitfirstChoice">Submit</span></form></div>');
+    }
+
+    if ($('#secondChoice').attr('data-present') === 'no') {
+        $('#secondChoice').append('<h1>Player 2</h1><div class="innerContent"><form><h2>Player 2: Enter Your Name</h2><input id="inputsecondChoice" val=""><br><span class="button" id="submitsecondChoice">Submit</span></form></div>');
+    }
+
+}
+
 $(document).on('click', '#submitChat', function () {
     let messageContent
-    if ($('#player-1').attr('data-playerPresent') === 'yes' || $('#firstChoice').attr('data-playerPresent') === 'yes') {
+    if ($('#firstChoice').attr('data-playerPresent') === 'yes' || $('#firstChoice').attr('data-playerPresent') === 'yes') {
         messageContent = `${player_1_name}: ${$('#message').val()}`;
-    } else if ($('#player-2').attr('data-playerPresent') === 'yes' || $('#secondChoice').attr('data-playerPresent') === 'yes') {
+    } else if ($('#secondChoice').attr('data-playerPresent') === 'yes' || $('#secondChoice').attr('data-playerPresent') === 'yes') {
         messageContent = `${player_2_name}: ${$('#message').val()}`;
     }
     chat.push(messageContent);
